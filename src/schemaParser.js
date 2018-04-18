@@ -132,7 +132,7 @@ const getPropTypeValue = (schemaName, prop) => {
         str = `arrayOf(${getPropTypeValue(schemaName, prop.items)})`
       }
       addRequiredPropType('arrayOf')
-      break;
+      break
     case 'object':
       if(prop.$ref) {
         const ref = parseRef(prop.$ref)
@@ -148,7 +148,7 @@ const getPropTypeValue = (schemaName, prop) => {
       }
       // check
       addRequiredPropType('shape')
-      break;
+      break
     case 'number':
     case 'integer':
     case 'long':
@@ -156,7 +156,7 @@ const getPropTypeValue = (schemaName, prop) => {
     case 'double':
       str = 'number'
       addRequiredPropType('number')
-      break;
+      break
     case 'string':
     case 'byte':
     case 'binary':
@@ -165,11 +165,17 @@ const getPropTypeValue = (schemaName, prop) => {
     case 'password':
       str = 'string'
       addRequiredPropType('string')
-      break;
+      break
     case 'boolean':
       str = 'bool'
       addRequiredPropType('bool')
-      break;
+      break
+    default:
+      if(prop.$ref) {
+        const newProp = { type: 'object', ...prop }
+        str = getPropTypeValue(schemaName, newProp)
+      }
+      break
   }
 
   return str
