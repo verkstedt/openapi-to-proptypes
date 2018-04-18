@@ -15,8 +15,7 @@ converts an openapi (3.0) or swagger (2.3) endpoint to react propTypes file(s).
 
 #####flags
 
-`-swagger` the `<url>` to parse has a swagger file structure
-(instead of the complete openapi structure)
+`-v2` expect `<url>` to return openapi version 2.0 instead of 3.0
 
 `-multipleFiles` will create a sepearte file for each definied model instead of a single one
 
