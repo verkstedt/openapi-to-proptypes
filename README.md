@@ -20,3 +20,5 @@ converts an openapi (3.0) or swagger (2.3) endpoint to react propTypes file(s).
 `-multipleFiles` will create a sepearte file for each definied model instead of a single one
 
 `-f` will not exit on 'unpresent' but 'referenced' propType models
+Normally this tool will exit when it finds a referenced propType (via $ref) which is not definied in the parsed file.
+With this flag set it will continue even on not defined references.
