@@ -1,6 +1,6 @@
 ### openapi-to-propTypes
 
-converts an openapi (3.0) or swagger (2.3) endpoint to react propTypes file(s).
+converts openapi (3.0) or swagger (2.3) endpoint to react propTypes file(s).
 
 ### installlation
 
@@ -12,7 +12,6 @@ or
 
 ### usage
 
-(global)
 `openapi-to-propTypes <url> <path>`
 
 `<url>` url of the openapi or swagger endpoint
