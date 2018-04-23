@@ -48,12 +48,25 @@ const createFile = () => {
 }
 
 const createFiles = () => {
+  const files = []
   Object.keys(SCHEMAS).forEach(schemaName => {
     requiredFileImports.length = 0
     requiredPropTypeImports.length = 0
     const fileContent = `${schemaToFileContent(schemaName, SCHEMAS[schemaName])}\r\n`
-    write(`${schemaName}.js`, fileContent)
+    const fileName = `${schemaName}.js`
+    write(fileName, fileContent)
+    files.push(schemaName)
   })
+  createCentralImportFile(files)
+}
+
+const createCentralImportFile = (files) => {
+  let fileContent = ''
+  files.forEach(item => {
+    fileContent = `${fileContent}export * from './${item}'\r\n`
+  })
+
+  write('index.js', fileContent)
 }
 
 const write = (fileName, content) => {
