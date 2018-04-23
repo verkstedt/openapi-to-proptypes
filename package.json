@@ -1,6 +1,6 @@
 {
   "name": "openapi-to-proptypes",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "transform openapi schemas or swagger models to react propTypes",
   "main": "index.js",
   "bin": {
