@@ -21,8 +21,14 @@ or
 #### flags
 
 `-f`           force, do not throw error on not-found $ref objectTypes
+
 `-m`           multiple files
+
 `-i`           create index export file
+
 `-h`           include header
+
 `--require`    forces require on all propTypes
+
 `-v 2`         use swagger version 2
+
