@@ -19,7 +19,6 @@
   "license": "MIT",
   "dependencies": {
     "minimist": "^1.2.0",
-    "openapi-to-proptypes": "^1.0.4",
     "request": "^2.85.0"
   }
 }
