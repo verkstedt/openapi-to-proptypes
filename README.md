@@ -12,18 +12,17 @@ or
 
 ### usage
 
-`openapi-to-propTypes <url> <path>`
+`openapi-to-propTypes <src> <target>`
 
-`<url>` url of the openapi or swagger endpoint
+`<src>` url of the openapi or swagger endpoint
 
-`<path>` path were the files should be created (must exist)
+`<target>` target path were the files should be created
 
 #### flags
 
-`-v2` expect `<url>` to return openapi version 2.0 instead of 3.0
-
-`-multipleFiles` will create a sepearte file for each definied model instead of a single one
-
-`-f` will not exit on 'unpresent' but 'referenced' propType models
-Normally this tool will exit when it finds a referenced propType (via $ref) which is not definied in the parsed file.
-With this flag set it will continue even on not defined references.
+`-f`           force, do not throw error on not-found $ref objectTypes
+`-m`           multiple files
+`-i`           create index export file
+`-h`           include header
+`--require`    forces require on all propTypes
+`-v 2`         use swagger version 2

@@ -133,20 +133,14 @@ const getPropTypeObject = (schemaName, schema) => {
 }
 
 const getPropTypes = (schemaName, props, requiredProps) => {
-  let str = ''
-  propNames = Object.keys(props)
-  // using for instead of forEach because of code format
-  for(let i = propNames.length - 1; i >= 0; i--) {
-    if(i === 0) {
-      str += `  ${propNames[i]}: ${getPropTypeValue(schemaName, props[propNames[i]])}`
-      str += `${getRequired(props[propNames[i]], propNames[i], requiredProps)}\r\n`
-      continue
-    }
-    str += `  ${propNames[i]}: ${getPropTypeValue(schemaName, props[propNames[i]])}`
-    str += `${getRequired(props[propNames[i]], propNames[i], requiredProps)},\r\n`
-  }
-
-  return str
+  str = ''
+  Object.keys(props).forEach(
+  propName => {
+    str += `  ${propName}: ${getPropTypeValue(schemaName, props[propName])}`
+    str += `${getRequired(props[propName], propName, requiredProps)},\r\n`
+    return str
+  })
+  return str.replace(/,([^,]*)$/, '$1')
 }
 
 const getRequired = (prop, propName, requiredProps) => {
