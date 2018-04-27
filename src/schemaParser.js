@@ -1,19 +1,31 @@
 const fs = require('fs')
 
 let SCHEMAS = {}
-let PATH = ''
-let URL = ''
+let TARGET = ''
+let SRC = ''
 let DATETIME = ''
-let MULTIPLE_FILES = false
+let VERSION = 3
+let INCLUDE_HEADER = false
 let FORCE = false
+let MULTIPLE_FILES = false
+let INDEX_FILE = false
+let FORCE_REQUIRE = false
 
-const parse = (schemas, url, datetime, path, force, multipleFiles) => {
+let options = {}
+
+const parse = (schemas, src, target, options) => {
   SCHEMAS = schemas
-  PATH = path ? `${path}/` : ''
-  URL = url
-  DATETIME = datetime
-  MULTIPLE_FILES = multipleFiles
-  FORCE = force
+
+  SRC = src
+  TARGET = target ? `${target}/` : ''
+
+  DATETIME = new Date().toISOString()
+  VERSION = options.version
+  FORCE = options.force
+  INCLUDE_HEADER = options.includeHeader
+  MULTIPLE_FILES = options.multipleFiles
+  INDEX_FILE = options.createIndex
+  FORCE_REQUIRE = options.forceRequire
 
   if(MULTIPLE_FILES) {
     createFiles()
@@ -57,7 +69,10 @@ const createFiles = () => {
     write(fileName, fileContent)
     files.push(schemaName)
   })
-  createCentralImportFile(files)
+
+  if(INDEX_FILE) {
+    createCentralImportFile(files)
+  }
 }
 
 const createCentralImportFile = (files) => {
@@ -70,7 +85,7 @@ const createCentralImportFile = (files) => {
 }
 
 const write = (fileName, content) => {
-  fs.writeFile(`${PATH}${fileName}`, content, err => {
+  fs.writeFile(`${TARGET}${fileName}`, content, err => {
     if(err) {
         return console.log(err);
     }
@@ -89,7 +104,10 @@ const schemaToFileContent = (schemaName, schema) => {
 }
 
 const getHeaderComment = (schemaName) => {
-  const str = `/*\r\n  ${schemaName}.js propTypes\r\n  extracted from ${URL}\r\n  on ${DATETIME}\r\n*/\r\n\r\n`
+  if(!INCLUDE_HEADER) {
+    return ''
+  }
+  const str = `/*\r\n  ${schemaName}.js propTypes\r\n  extracted from ${SRC}\r\n  on ${DATETIME}\r\n*/\r\n\r\n`
   return str
 }
 
@@ -108,24 +126,33 @@ const getImports = () => {
 }
 
 const getPropTypeObject = (schemaName, schema) => {
-  const str = `export const ${schemaName} = {\r\n${getPropTypes(schemaName, schema.properties)}}`
+  const requiredProps = schema.required || []
+  const str = `export const ${schemaName} = {\r\n${getPropTypes(schemaName, schema.properties, requiredProps)}}`
 
   return str
 }
 
-const getPropTypes = (schemaName, props) => {
+const getPropTypes = (schemaName, props, requiredProps) => {
   let str = ''
   propNames = Object.keys(props)
   // using for instead of forEach because of code format
   for(let i = propNames.length - 1; i >= 0; i--) {
     if(i === 0) {
-      str += `  ${propNames[i]}: ${getPropTypeValue(schemaName, props[propNames[i]])}.isRequired\r\n`
+      str += `  ${propNames[i]}: ${getPropTypeValue(schemaName, props[propNames[i]])}`
+      str += `${getRequired(props[propNames[i]], propNames[i], requiredProps)}\r\n`
       continue
     }
-    str += `  ${propNames[i]}: ${getPropTypeValue(schemaName, props[propNames[i]])}.isRequired,\r\n`
+    str += `  ${propNames[i]}: ${getPropTypeValue(schemaName, props[propNames[i]])}`
+    str += `${getRequired(props[propNames[i]], propNames[i], requiredProps)},\r\n`
   }
 
   return str
+}
+
+const getRequired = (prop, propName, requiredProps) => {
+  // not sure if prop.required is according to the openapi v3 spec
+  return FORCE_REQUIRE || requiredProps.indexOf(propName) !== -1 || prop.required ?
+    '.isRequired' : ''
 }
 
 const getPropTypeValue = (schemaName, prop) => {
