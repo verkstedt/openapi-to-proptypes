@@ -20,15 +20,20 @@ or
 
 #### flags
 
-`-f`           force, do not throw error on not-found $ref objectTypes
+`-f`                        force, do not throw error on not-found $ref objectTypes
 
-`-m`           multiple files
+`-m`                        multiple files
 
-`-i`           create index export file
+`-i`                        create index export file
 
-`-h`           include header
+`-h`                        include header
 
-`--require`    forces require on all propTypes
+`--require [true|false]`    forces/prevents `.isRequired` on all propTypes
 
-`-v 2`         use swagger version 2
+`-v 2`                      use swagger version 2
 
+### development
+
+test the script (manually):
+
+`$ node index.js https://gist.githubusercontent.com/jacksbox/2e82e0e03c1a8112f6b135fbe5bdd780/raw/838ed3a55e9ee168589eda71d83dba3d163d84e8/openapi.v3 <target> [...options]`

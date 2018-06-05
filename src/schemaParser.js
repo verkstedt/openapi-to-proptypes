@@ -10,6 +10,7 @@ let FORCE = false
 let MULTIPLE_FILES = false
 let INDEX_FILE = false
 let FORCE_REQUIRE = false
+let FORCE_REQUIRE_TO = false
 
 let options = {}
 
@@ -25,7 +26,10 @@ const parse = (schemas, src, target, options) => {
   INCLUDE_HEADER = options.includeHeader
   MULTIPLE_FILES = options.multipleFiles
   INDEX_FILE = options.createIndex
-  FORCE_REQUIRE = options.forceRequire
+  FORCE_REQUIRE = typeof(options.forceRequire === 'boolean')
+  if(FORCE_REQUIRE) {
+    FORCE_REQUIRE_TO = options.forceRequire
+  }
 
   if(MULTIPLE_FILES) {
     createFiles()
@@ -144,8 +148,12 @@ const getPropTypes = (schemaName, props, requiredProps) => {
 }
 
 const getRequired = (prop, propName, requiredProps) => {
+  if(FORCE_REQUIRE) {
+    return FORCE_REQUIRE_TO ? '.isRequired' : ''
+  }
+
   // not sure if prop.required is according to the openapi v3 spec
-  return FORCE_REQUIRE || requiredProps.indexOf(propName) !== -1 || prop.required ?
+  return requiredProps.indexOf(propName) !== -1 || prop.required ?
     '.isRequired' : ''
 }
 

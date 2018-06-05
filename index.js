@@ -10,21 +10,24 @@ if(argv._.length !== 2) {
 }
 
 /* FLAGS
- * -f           force, do not exit on not-found objectTypes
- * -m           multiple files
- * -i           create index export file
- * -h           include header
- * --require    forces require on all propTypes
- * -v 2         use swagger version 2
+ * -f                         force, do not exit on not-found objectTypes
+ * -m                         multiple files
+ * -i                         create index export file
+ * -h                         include header
+ * --require [true|false]`    forces/prevents `.isRequired` on all propTypes
+ * -v 2                       use swagger version 2
  */
 
 const options = {
-  force: argv.f,
+  force: argv.f || false,
   version: argv.v ? argv.v : 3,
   multipleFiles: argv.m,
-  createIndex: argv.i,
-  includeHeader: argv.h,
-  forceRequire: argv.require
+  createIndex: argv.i || false,
+  includeHeader: argv.h || false,
+}
+
+if(argv.require && (argv.require === 'true' || argv.require === 'false')) {
+  options.forceRequire = (argv.require === 'true')
 }
 
 const src = argv._[0]
