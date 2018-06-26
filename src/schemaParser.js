@@ -138,7 +138,7 @@ const getPropTypeObject = (schemaName, schema) => {
 
 const getPropTypes = (schemaName, props, requiredProps) => {
   str = ''
-  Object.keys(props).forEach(
+  props  && Object.keys(props).forEach(
   propName => {
     str += `  ${propName}: ${getPropTypeValue(schemaName, props[propName])}`
     str += `${getRequired(props[propName], propName, requiredProps)},\r\n`
