@@ -4,11 +4,11 @@ converts openapi (3.0) or swagger (2.3) endpoint to react propTypes file(s).
 
 ### installlation
 
-`npm install -g openapi-to-propypes` (`yarn add -g openapi-to-propypes`) for global usage
+`npm install -g openapi-to-proptypes` (`yarn add -g openapi-to-proptypes`) for global usage
 
 or
 
-`npm install openapi-to-propypes` (`yarn add openapi-to-propypes`) localy in your project
+`npm install openapi-to-proptypes` (`yarn add openapi-to-proptypes`) localy in your project
 
 ### usage
 
