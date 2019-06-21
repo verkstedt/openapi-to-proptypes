@@ -210,12 +210,6 @@ oauth-sign@~0.8.2:
   version "0.8.2"
   resolved "https://registry.yarnpkg.com/oauth-sign/-/oauth-sign-0.8.2.tgz#46a6ab7f0aead8deae9ec0565780b7d4efeb9d43"
 
-openapi-to-proptypes@^1.0.4:
-  version "1.0.4"
-  resolved "https://registry.yarnpkg.com/openapi-to-proptypes/-/openapi-to-proptypes-1.0.4.tgz#cc81ca387dad5de0125d057c6d66bc48a903acf2"
-  dependencies:
-    request "^2.85.0"
-
 performance-now@^2.1.0:
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/performance-now/-/performance-now-2.1.0.tgz#6309f4e0e5fa913ec1c69307ae364b4b377c9e7b"
@@ -280,8 +274,8 @@ sshpk@^1.7.0:
     tweetnacl "~0.14.0"
 
 stringstream@~0.0.5:
-  version "0.0.5"
-  resolved "https://registry.yarnpkg.com/stringstream/-/stringstream-0.0.5.tgz#4e484cd4de5a0bbbee18e46307710a8a81621878"
+  version "0.0.6"
+  resolved "https://registry.yarnpkg.com/stringstream/-/stringstream-0.0.6.tgz#7880225b0d4ad10e30927d167a1d6f2fd3b33a72"
 
 tough-cookie@~2.3.3:
   version "2.3.4"
